@@ -27,5 +27,6 @@ public class FlappyBird {
 		Frame.setVisible(true);
 		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Panel.startGame();
+		Frame.addKeyListener(Panel);
 	}
 }
