@@ -1,6 +1,7 @@
 package FlappyBirdGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,13 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = START_STATE;
+	Font titleFont;
+	Bird Flappy = new Bird(910, 540, 50, 50);
 	
 	FlappyPanel() {
 		frameRate = new Timer(1000/60, this);
 		obj = new FlappyObject(10, 10, 100, 100);
+		titleFont = new Font("Arial" , Font.PLAIN, 48);
 	}
 
 	@Override
@@ -84,7 +88,7 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void updateGameState() {
-		
+		Flappy.update();
 	}
 	
 	void updateEndState() {
@@ -94,16 +98,24 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 	void drawStartState(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder); 
+		g.setFont(titleFont);
+		g.setColor(Color.GREEN);
+        g.drawString("FlAppy BiRd", 820, 220);
+
 	}
 	
-	void drawGameState(Graphics g) {
+	void drawGameState (Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder);
+		Flappy.draw(g);
 	}
 	
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder);
+		g.setFont(titleFont);
+		g.setColor(Color.ORANGE);
+		g.drawString("Game Over", 820, 220 );
 	}
 
 }
