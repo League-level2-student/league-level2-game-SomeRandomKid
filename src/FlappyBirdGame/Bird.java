@@ -6,16 +6,19 @@ import java.awt.Graphics;
 public class Bird extends FlappyObject {
 	
 	int speed;
+	boolean up = false;
 
 	Bird(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
-		speed = -5;
+		speed = 0;
 	}
 	
 	void update() {
 		super.update();
-		y -= speed;
+		y += speed;
+		speed++;
+	
 	}
 	
 	void draw(Graphics g) {
