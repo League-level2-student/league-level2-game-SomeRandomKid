@@ -1,0 +1,4 @@
+tpy = 0
+tph = ?
+bpy = tph + gap
+bph = height - bpy
