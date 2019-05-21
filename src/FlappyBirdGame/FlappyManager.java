@@ -9,6 +9,7 @@ public class FlappyManager {
 	Bird angry;
 	GreenPipes obstacle;
 	
+	
 	FlappyManager(Bird b) {
 		angry = b;
 		Random PipeY = new Random();
@@ -25,5 +26,15 @@ public class FlappyManager {
 		angry.draw(g);
 		obstacle.draw(g);
 	}
+	
+	void checkCollision() {
+		 if(angry.collisionBox.intersects(obstacle.topPipe)){
+             angry.isAlive = false;
+     }
+		 else if(angry.collisionBox.intersects(obstacle.bottomPipe)){
+             angry.isAlive = false;
+     }
+	}
 }
+
 	
