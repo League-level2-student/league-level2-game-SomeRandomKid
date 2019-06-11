@@ -8,6 +8,7 @@ public class FlappyManager {
 
 	Bird angry;
 	GreenPipes obstacle;
+	public static int score = 0;
 	
 	
 	FlappyManager(Bird b) {
@@ -33,8 +34,15 @@ public class FlappyManager {
      }
 		 else if(angry.collisionBox.intersects(obstacle.bottomPipe)){
              angry.isAlive = false;
+           
      }
+		 else if(angry.y >= FlappyBird.yBorder) {
+			 angry.isAlive = false;
+		 }
 	}
+	 int getScore() {
+			return score;
+		}
 }
 
 	

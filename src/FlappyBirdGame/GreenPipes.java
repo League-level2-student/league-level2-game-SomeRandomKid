@@ -24,6 +24,7 @@ public class GreenPipes extends FlappyObject{
 			Random PipeY = new Random();
 			y = PipeY.nextInt(FlappyBird.yBorder - 100) + 50;
 			x = FlappyBird.xBorder;
+			FlappyManager.score++;
 		}
 		
 		topPipe.setBounds(x, 0, width, y);

@@ -18,7 +18,9 @@ public class Bird extends FlappyObject {
 		super.update();
 		y += speed;
 		speed++;
-	
+	if (y  < 0) {
+		y = 0;
+	}
 	}
 	
 	void draw(Graphics g) {

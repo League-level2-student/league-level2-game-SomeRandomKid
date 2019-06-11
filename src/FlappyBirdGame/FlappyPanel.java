@@ -7,11 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
+public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 	Timer frameRate;
 	FlappyObject obj;
 	final int START_STATE = 0;
@@ -21,11 +24,19 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 	Font titleFont;
 	Bird Flappy = new Bird(910, 540, 50, 50);
 	FlappyManager manager = new FlappyManager(Flappy);
-	
+	   public static BufferedImage FlappyBGImg;
+
 	FlappyPanel() {
-		frameRate = new Timer(1000/60, this);
+		frameRate = new Timer(1000 / 60, this);
 		obj = new FlappyObject(10, 10, 100, 100);
-		titleFont = new Font("Arial" , Font.PLAIN, 48);
+		titleFont = new Font("Arial", Font.PLAIN, 48);
+		 try {
+           FlappyBGImg = ImageIO.read(this.getClass().getResourceAsStream("FB Background.jpg"));
+         
+     } catch (IOException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+     }
 	}
 
 	@Override
@@ -33,51 +44,52 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		repaint();
 		obj.update();
-		  if(currentState == START_STATE){
-              updateStartState();
-		  }
-		  else if(currentState == GAME_STATE){
-              updateGameState();
-		  }
-		  else if(currentState == END_STATE){
-              updateEndState();
-      }
+		if (currentState == START_STATE) {
+			updateStartState();
+		} else if (currentState == GAME_STATE) {
+			updateGameState();
+		} else if (currentState == END_STATE) {
+			updateEndState();
+		}
 	}
-	
+
 	void startGame() {
 		frameRate.start();
 	}
+
 	@Override
-	public void paintComponent(Graphics g){
-	obj.draw(g);
-	 if(currentState == START_STATE){
-         drawStartState(g);
-	 }
-	 else if(currentState == GAME_STATE){
-         drawGameState(g);
-	 }
-	 else if(currentState == END_STATE){
-         drawEndState(g);
-	 }
-	        }
+	public void paintComponent(Graphics g) {
+		obj.draw(g);
+		if (currentState == START_STATE) {
+			drawStartState(g);
+		} else if (currentState == GAME_STATE) {
+			drawGameState(g);
+		} else if (currentState == END_STATE) {
+			drawEndState(g);
+		}
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-	
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
-		if(currentState > END_STATE){
-            currentState = START_STATE;
+			if (currentState > END_STATE) {
+				currentState = START_STATE;
+			}
+			if (currentState == GAME_STATE) {
+				Flappy = new Bird(910, 540, 50, 50);
+				manager = new FlappyManager(Flappy);
+			}
 		}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			Flappy.up = true;
 		}
 	}
@@ -85,45 +97,52 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			Flappy.up = false;
 			Flappy.speed = -20;
 		}
 	}
-	
+
 	void updateStartState() {
-		
-	}
-	
-	void updateGameState() {
-		manager.update();
-	}
-	
-	void updateEndState() {
-		
-	}
-	
-	void drawStartState(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder); 
-		g.setFont(titleFont);
-		g.setColor(Color.GREEN);
-        g.drawString("FlAppy BiRd", 820, 220);
 
 	}
-	
-	void drawGameState (Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder);
+
+	void updateGameState() {
+		manager.update();
+		manager.checkCollision();
+		if (Flappy.isAlive == false) {
+			currentState++;
+			if (currentState == END_STATE) {
+				updateEndState();
+			}
+		}
+	}
+
+	void updateEndState() {
+
+	}
+
+	void drawStartState(Graphics g) {
+		  g.drawImage(FlappyPanel.FlappyBGImg, 0, 0, FlappyBird.xBorder, FlappyBird.yBorder, null);
+		//g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder);
+		g.setFont(titleFont);
+		g.setColor(Color.GREEN);
+		g.drawString("FlAppy BiRd", 820, 220);
+
+	}
+
+	void drawGameState(Graphics g) {
+		 g.drawImage(FlappyPanel.FlappyBGImg, 0, 0, FlappyBird.xBorder, FlappyBird.yBorder, null);
 		manager.draw(g);
 	}
-	
+
 	void drawEndState(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillRect(0, 0, FlappyBird.xBorder, FlappyBird.yBorder);
+		 g.drawImage(FlappyPanel.FlappyBGImg, 0, 0, FlappyBird.xBorder, FlappyBird.yBorder, null);
 		g.setFont(titleFont);
 		g.setColor(Color.ORANGE);
-		g.drawString("Game Over", 820, 220 );
+		g.drawString("Game Over", 820, 220);
+		g.drawString("Score: " + manager.getScore(), 850, 500);
+
 	}
 
 }
