@@ -22,7 +22,7 @@ public class GreenPipes extends FlappyObject{
 		x-=6;
 		if (x <= 0) {
 			Random PipeY = new Random();
-			y = PipeY.nextInt(FlappyBird.yBorder - 100) + 50;
+			y = PipeY.nextInt(FlappyBird.yBorder - 300);
 			x = FlappyBird.xBorder;
 			FlappyManager.score++;
 		}
@@ -32,9 +32,9 @@ public class GreenPipes extends FlappyObject{
 	}
 	
 	void draw(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.fillRect(x, 0, width, y);
-		g.fillRect(x, y+height, width, FlappyBird.yBorder-(y+height));
+
+		g.drawImage(FlappyPanel.TopPipe, x, 0, width, y, null);
+		g.drawImage(FlappyPanel.BottomPipe, x, y+height, width, FlappyBird.yBorder-(y+height), null);
 	}
 
 }

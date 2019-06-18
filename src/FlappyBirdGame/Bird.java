@@ -24,8 +24,7 @@ public class Bird extends FlappyObject {
 	}
 	
 	void draw(Graphics g) {
-		 g.setColor(Color.YELLOW);
-	        g.fillRect(x, y, width, height);
+		 g.drawImage(FlappyPanel.FlappyBi, x, y, width, height, null);
 
 	}
 

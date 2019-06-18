@@ -14,7 +14,7 @@ public class FlappyManager {
 	FlappyManager(Bird b) {
 		angry = b;
 		Random PipeY = new Random();
-		int PipeH = PipeY.nextInt(FlappyBird.yBorder - 100) + 50;
+		int PipeH = PipeY.nextInt(FlappyBird.yBorder - 300) + 50;
 		obstacle = new GreenPipes(FlappyBird.xBorder, PipeH, 175, 300);
 	}
 	

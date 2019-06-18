@@ -22,9 +22,13 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	int currentState = START_STATE;
 	Font titleFont;
-	Bird Flappy = new Bird(910, 540, 50, 50);
+	Bird Flappy = new Bird(910, 540, 40, 40);
 	FlappyManager manager = new FlappyManager(Flappy);
 	   public static BufferedImage FlappyBGImg;
+	   public static BufferedImage FlappyBi;
+	   public static BufferedImage TopPipe;
+	   public static BufferedImage BottomPipe;
+
 
 	FlappyPanel() {
 		frameRate = new Timer(1000 / 60, this);
@@ -32,6 +36,10 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		 try {
            FlappyBGImg = ImageIO.read(this.getClass().getResourceAsStream("FB Background.jpg"));
+           FlappyBi = ImageIO.read(this.getClass().getResourceAsStream("FlappyBird.jpg"));
+           TopPipe = ImageIO.read(this.getClass().getResourceAsStream("TopPipe.png"));
+           BottomPipe = ImageIO.read(this.getClass().getResourceAsStream("BottomPipe.png"));
+         
          
      } catch (IOException e) {
              // TODO Auto-generated catch block
@@ -87,6 +95,7 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 			if (currentState == GAME_STATE) {
 				Flappy = new Bird(910, 540, 50, 50);
 				manager = new FlappyManager(Flappy);
+				FlappyManager.score= 0; 
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
