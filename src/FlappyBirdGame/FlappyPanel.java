@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +23,7 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 2;
 	int currentState = START_STATE;
 	Font titleFont;
+	Font subFont;
 	Bird Flappy = new Bird(910, 540, 40, 40);
 	FlappyManager manager = new FlappyManager(Flappy);
 	   public static BufferedImage FlappyBGImg;
@@ -34,6 +36,7 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 		frameRate = new Timer(1000 / 60, this);
 		obj = new FlappyObject(10, 10, 100, 100);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
+		subFont = new Font("Arial", Font.PLAIN, 24);
 		 try {
            FlappyBGImg = ImageIO.read(this.getClass().getResourceAsStream("FB Background.jpg"));
            FlappyBi = ImageIO.read(this.getClass().getResourceAsStream("FlappyBird.jpg"));
@@ -99,6 +102,9 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if(currentState == START_STATE) {
+				JOptionPane.showMessageDialog(null, "Press 'SPACE' to go up. Release to go down. Try to get yor highest score.");
+			}
 			Flappy.up = true;
 		}
 	}
@@ -108,7 +114,7 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			Flappy.up = false;
-			Flappy.speed = -20;
+			Flappy.speed = -18;
 		}
 	}
 
@@ -137,6 +143,11 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.setColor(Color.GREEN);
 		g.drawString("FlAppy BiRd", 820, 220);
+		g.setColor(Color.RED);
+		g.drawString("Press 'ENTER' to start", 725, 540);
+		g.setFont(subFont);
+		g.drawString("Press 'SPACE' for instructions", 800, 700);
+		
 
 	}
 
@@ -151,6 +162,8 @@ public class FlappyPanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.ORANGE);
 		g.drawString("Game Over", 820, 220);
 		g.drawString("Score: " + manager.getScore(), 850, 500);
+		g.setFont(subFont);
+		g.drawString("Press 'ENTER' to go to Menu", 805, 700);
 
 	}
 
